@@ -1,7 +1,7 @@
 # from mistralai import Mistral
 # from content_processor import clean_extracted_text
 
-# API_KEY = "TosQVDLICNXLtiId4tpicCqEgenoMDzq"
+
 # client = Mistral(api_key=API_KEY)
 
 # # --- OCR extraction ---

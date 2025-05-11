@@ -15,7 +15,7 @@ def extract_text_with_ocr(pdf_path):
 
     try:
         # Step 2: Call Mistral OCR
-        api_key = "TosQVDLICNXLtiId4tpicCqEgenoMDzq"  # Secure it via environment variable in production
+        api_key = ""  # Secure it via environment variable in production
         client = Mistral(api_key=api_key)
 
         ocr_response = client.ocr.process(
