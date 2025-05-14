@@ -1,35 +1,28 @@
-# content_processor.py
 import re
 
-def clean_extracted_text(extracted_text: str) -> str:
+def clean_extracted_text(text: str) -> str:
     """
-    Cleans OCR-extracted text to make it ready for NLP/question generation.
-
-    Args:
-        extracted_text (str): The raw text extracted from PDF/OCR.
-
-    Returns:
-        str: Cleaned and structured text.
+    Cleans extracted OCR text to remove noise and prepare for chunking.
     """
-    # Step 1: Normalize whitespace
-    text = re.sub(r'\n+', '\n', extracted_text).strip()
 
-    # Step 2: Fix broken lines (join lines that likely belong together)
-    lines = text.split('\n')
-    joined_lines = []
+    # Step 1: Remove page numbers and artifacts
+    text = re.sub(r'\f', '', text)  # Remove form feed characters (page breaks)
+    text = re.sub(r'Page\s*\d+(\s*of\s*\d+)?', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\b\d{1,3}\b', lambda m: '' if len(m.group(0)) <= 2 else m.group(0), text)
+    text = re.sub(r'[\|\*_]{2,}', '', text)  # Remove long repeated characters like ___ or ||||
 
-    for i in range(len(lines)):
-        line = lines[i].strip()
+    # Step 2: Remove lines that are all caps and very short (likely headers/footers)
+    text = "\n".join([
+        line for line in text.split("\n")
+        if not (line.strip().isupper() and len(line.strip().split()) <= 5)
+    ])
 
-        # If this line doesn't end in punctuation and next line exists
-        if i < len(lines) - 1 and not line.endswith(('.', '?', '!', ':')) and lines[i+1].strip() and not lines[i+1].strip()[0].isdigit():
-            line += ' ' + lines[i+1].strip()
-            lines[i+1] = ''  # avoid re-processing
-        if line:
-            joined_lines.append(line)
+    # Step 3: Remove TOC-like entries (e.g., "1. Introduction .................. 5")
+    text = re.sub(r'\.{5,}\s*\d+', '', text)
 
-    # Step 3: Normalize quotes and dashes
-    text = '\n'.join(joined_lines)
-    text = text.replace("“", '"').replace("”", '"').replace("’", "'").replace("–", "-")
+    # Step 4: Normalize whitespace and remove empty lines
+    text = re.sub(r'\n{2,}', '\n\n', text)  # Preserve paragraph breaks
+    text = re.sub(r'[ \t]+', ' ', text)     # Normalize spaces
+    text = text.strip()
 
     return text
