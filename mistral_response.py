@@ -98,6 +98,7 @@ def run_pipeline(pdf_path):
         print(text)
         return
 
+
     #print("[2] Cleaning extracted text...")
     #text = clean_extracted_text(text)
 

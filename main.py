@@ -59,9 +59,8 @@ def upload_file():
     if file and file.filename.endswith('.pdf'):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
+        result = extract_text_with_ocr(file_path)
 
-
-        #myadd starts
         try:
             # Run the pipeline
             index, embeddings, chunks = run_pipeline(file_path)
@@ -80,12 +79,10 @@ def upload_file():
         result_html += f"<p>{embeddings.shape}</p>"
 
         return result_html
-        #myadd ends
 
-
+        ## result = extract_text_with_ocr(file_path)
+        ## return f"OCR Result:<br><pre>{result}</pre>"
         # return f"File uploaded successfully to {file_path}"
-        ##result = extract_text_with_ocr(file_path)
-        ##return f"OCR Result:<br><pre>{result}</pre>"
         # print(file_path)
    
     return "Invalid file format. Please upload a PDF.", 400

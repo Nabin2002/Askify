@@ -9,7 +9,6 @@ def sent_tokenize_spacy(text):
     return [sent.text.strip() for sent in doc.sents if sent.text.strip()]
 
 
-
 def sentence_based_chunking(text, max_words=200):
     sentences = sent_tokenize_spacy(text)
     chunks = []
