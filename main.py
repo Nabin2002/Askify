@@ -31,7 +31,7 @@
 # # --- Display the cleaned text ---
 # print(cleaned_text)
 from mistral_response import extract_text_with_ocr
-
+from mistral_response import run_pipeline
 from flask import Flask, request, render_template
 import os
 
@@ -59,11 +59,36 @@ def upload_file():
     if file and file.filename.endswith('.pdf'):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
-        # return f"File uploaded successfully to {file_path}"
         result = extract_text_with_ocr(file_path)
-        return f"OCR Result:<br><pre>{result}</pre>"
+
+        try:
+            # Run the pipeline
+            index, embeddings, chunks = run_pipeline(file_path)
+        except Exception as e:
+            return f"<h2>Error running pipeline:</h2><pre>{str(e)}</pre>"
+
+        # Prepare the results for display
+        result_html = "<h2>Stored Chunks and Embeddings</h2>"
+        result_html += "<h3>Chunks:</h3><ul>"
+        # max_display = 5
+        for i, chunk in enumerate(chunks):
+            result_html += f"<li><strong>Chunk {i+1}:</strong> {chunk}</li>"
+        result_html += "</ul>"
+
+        result_html += "<h3>Embedding Shape:</h3>"
+        result_html += f"<p>{embeddings.shape}</p>"
+
+        return result_html
+
+        ## result = extract_text_with_ocr(file_path)
+        ## return f"OCR Result:<br><pre>{result}</pre>"
+        # return f"File uploaded successfully to {file_path}"
         # print(file_path)
    
     return "Invalid file format. Please upload a PDF.", 400
+
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+   app.run(debug=True)
