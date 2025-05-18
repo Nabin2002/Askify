@@ -1,14 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Upload PDF</title>
+  <meta charset="UTF-8">
+  <title>Askify </title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #dbeafe);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .logo-heading {
+      font-size: 48px;
+      font-weight: 700;
+      color: #3b82f6;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 35px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .sub-heading {
+      font-size: 18px;
+      color: #4b5563;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      margin: 15px 0 5px;
+      color: #374151;
+    }
+
+    input[type="file"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      background-color: #f9fafb;
+    }
+
+    select {
+      background-color: #f9fafb;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      .logo-heading {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h2>Upload a PDF File</h2>
+
+  <div class="logo-heading">Askify</div>
+
+  <div class="container">
+    <div class="sub-heading">Smart PDF Question Generator</div>
     <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="pdf_file" accept=".pdf" required>
-        <br><br>
-        <button type="submit">Upload</button>
+      <label for="pdf_file">Select PDF:</label>
+      <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+
+      <label for="section_name">Section Name:</label>
+      <input type="text" name="section_name" id="section_name" placeholder="Enter section name" required>
+
+      <label for="difficulty">Difficulty Level:</label>
+      <select name="difficulty" id="difficulty" required>
+        <option value="" disabled selected>Select level</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+
+      <button type="submit">Upload</button>
     </form>
+  </div>
 </body>
 </html>
