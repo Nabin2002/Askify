@@ -1,124 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Askify </title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Askify</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@200;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f0f4ff, #dbeafe);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            height: 100vh;
+            color: #000;
+            background-color: #fff;
+        }
 
-    .logo-heading {
-      font-size: 48px;
-      font-weight: 700;
-      color: #3b82f6;
-      margin-bottom: 20px;
-    }
+        /* Header */
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            flex-wrap: wrap;
+        }
 
-    .container {
-      background-color: #ffffff;
-      padding: 35px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-    }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
 
-    .sub-heading {
-      font-size: 18px;
-      color: #4b5563;
-      margin-bottom: 25px;
-    }
+        #logo {
+            height: 40px;
+            width: 40px;
+        }
 
-    label {
-      display: block;
-      text-align: left;
-      font-weight: 600;
-      margin: 15px 0 5px;
-      color: #374151;
-    }
+        .heading-components {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
 
-    input[type="file"],
-    input[type="text"],
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      background-color: #f9fafb;
-    }
+        .heading-components a {
+            text-decoration: none;
+            color: inherit;
+            font-family: "Inter", sans-serif;
+        }
 
-    select {
-      background-color: #f9fafb;
-    }
+        .icon {
+            width: 20px;
+        }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #3b82f6;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
-    }
+        /* Main Content */
+        .wrapper {
+            margin: 6rem auto;
+            padding: 0 1rem;
+            text-align: center;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    button:hover {
-      background-color: #2563eb;
-    }
+        .content {
+            font-size: 3rem;
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            line-height: 1.1;
+        }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 25px 20px;
-      }
+        #grad {
+            background: linear-gradient(to right, rgba(7, 163, 224, 1), rgba(87, 199, 133, 1), rgba(116, 237, 83, 1), rgba(7, 163, 224, 1));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradientAnimation 5s linear infinite;
+        }
 
-      .logo-heading {
-        font-size: 36px;
-      }
-    }
-  </style>
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 200% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .text {
+            margin-top: 2rem;
+            max-width: 90%;
+            font-size: 1.25rem;
+            text-align: center;
+            font-family: "Inter", sans-serif;
+        }
+
+        /* Button */
+        .btn {
+            margin-top: 3rem;
+        }
+
+        #try-askify {
+            padding: 0.9rem 2.2rem;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-family: "Inter", sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        #try-askify:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+            background-color: #222;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            font-weight: 400;
+            background: #f9f9f9;
+            margin-top: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .heading-components {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .content {
+                font-size: 2rem;
+            }
+
+            .text {
+                font-size: 1rem;
+            }
+
+            #try-askify {
+                font-size: 1rem;
+                padding: 0.8rem 1.8rem;
+            }
+
+            .logo-container h2 {
+                font-size: 1.25rem;
+            }
+
+            footer {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <header>
+        <div class="heading">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" id="logo">
+                <h2>Askify</h2>
+            </div>
+            <nav class="heading-components">
+                <a href="#overview">Overview</a>
+                <a href="#pricing">Pricing</a>
+                <div class="social-media">
+                    <a href="https://discord.com" target="_blank" aria-label="Discord">
+                        <img src="https://cdn.simpleicons.org/discord/000000" class="icon" alt="Discord">
+                    </a>
+                    <a href="https://x.com" target="_blank" aria-label="X (Twitter)">
+                        <img src="https://cdn.simpleicons.org/x/000000" class="icon" alt="X (Twitter)">
+                    </a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                        <img src="https://cdn.simpleicons.org/instagram/000000" class="icon" alt="Instagram">
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-  <div class="logo-heading">Askify</div>
+    <main>
+        <div class="wrapper">
+            <div class="content">
+                <h1>Generate</h1>
+                <h1 id="grad">Questions</h1>
+            </div>
+            <p class="text">
+                Askify is your smart assistant for assessments, learning, and content review — simplifying the way you
+                generate questions with just a few clicks.
+            </p>
+            <div class="btn">
+                <a href="{{ url_for('form') }}">
+                    <button id="try-askify">Try Askify</button>
+                </a>
 
-  <div class="container">
-    <div class="sub-heading">Smart PDF Question Generator</div>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-      <label for="pdf_file">Select PDF:</label>
-      <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+            </div>
+        </div>
+    </main>
 
-      <label for="section_name">Section Name:</label>
-      <input type="text" name="section_name" id="section_name" placeholder="Enter section name" required>
-
-      <label for="difficulty">Difficulty Level:</label>
-      <select name="difficulty" id="difficulty" required>
-        <option value="" disabled selected>Select level</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-
-      <button type="submit">Upload</button>
-    </form>
-  </div>
+    <footer>
+        <p>&copy; 2025 Askify. All rights reserved.</p>
+    </footer>
 </body>
+
 </html>

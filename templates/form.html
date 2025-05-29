@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Askify | Generate Questions</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@200;400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .title {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .title h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+    }
+
+    #grad {
+      background: linear-gradient(to right, rgba(7, 163, 224, 1), rgba(87, 199, 133, 1), rgba(116, 237, 83, 1), rgba(7, 163, 224, 1));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      background-size: 200% auto;
+      animation: gradientAnimation 5s linear infinite;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 200% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-form .form-group {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    input[type="file"],
+    textarea,
+    select {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input[type="file"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #07a3e0;
+    }
+
+    #generate-btn {
+      padding: 0.9rem 2rem;
+      background-color: #000;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #generate-btn:hover {
+      transform: scale(1.05);
+      background-color: #222;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      .title h1 {
+        font-size: 2rem;
+      }
+
+      label,
+      input,
+      textarea,
+      select {
+        font-size: 0.95rem;
+      }
+
+      #generate-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Title outside the form container -->
+  <div class="title">
+    <h1><span id="grad">Askify</span> Question Generator</h1>
+  </div>
+
+  <!-- Form container -->
+  <div class="container">
+    <form class="question-form" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+      <!-- PDF Upload -->
+      <div class="form-group">
+        <label for="pdf">Upload PDF File</label>
+        <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required />
+      </div>
+
+      <!-- Query -->
+      <div class="form-group">
+        <label for="query">Enter Your Query</label>
+        <textarea id="query" name="query" rows="4" placeholder="Enter your topic, section, or query..."
+          required></textarea>
+      </div>
+
+      <!-- Difficulty Level -->
+      <div class="form-group">
+        <label for="difficulty">Select Difficulty Level</label>
+        <select id="difficulty" name="difficulty" required>
+          <option value="">-- Choose Level --</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+
+      <!-- Question Type -->
+      <div class="form-group">
+        <label for="qtype">Select Question Type</label>
+        <select id="qtype" name="qtype" required>
+          <option value="">-- Choose Type --</option>
+          <option value="mcq">Multiple Choice (MCQ)</option>
+          <option value="short">Short Answer</option>
+          <option value="long">Long Answer</option>
+          <option value="interview">Interview</option>
+        </select>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <button type="submit" id="generate-btn">Generate Question</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

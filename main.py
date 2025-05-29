@@ -46,6 +46,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def index():
     return render_template("index.html")
 
+@app.route('/form')
+def form():
+    return render_template('form.html')
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'pdf_file' not in request.files:
