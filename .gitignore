@@ -1,4 +1,6 @@
 myenv/
-.env/
 __pycache__/
 *.pyc
+faiss_indexes/
+uploads/
+.env
