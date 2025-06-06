@@ -1,124 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Askify </title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Askify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9Oer+rD6qOFlhFw8jsf+28yJ-t/z/o/O+2s0FqT" crossorigin="anonymous">
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f0f4ff, #dbeafe);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    .logo-heading {
-      font-size: 48px;
-      font-weight: 700;
-      color: #3b82f6;
-      margin-bottom: 20px;
-    }
-
-    .container {
-      background-color: #ffffff;
-      padding: 35px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-    }
-
-    .sub-heading {
-      font-size: 18px;
-      color: #4b5563;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      font-weight: 600;
-      margin: 15px 0 5px;
-      color: #374151;
-    }
-
-    input[type="file"],
-    input[type="text"],
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      background-color: #f9fafb;
-    }
-
-    select {
-      background-color: #f9fafb;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #3b82f6;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #2563eb;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 25px 20px;
-      }
-
-      .logo-heading {
-        font-size: 36px;
-      }
-    }
-  </style>
 </head>
 <body>
+    <div class="container">
+        <h2 class="mb-4 text-center">Askify</h2>
 
-  <div class="logo-heading">Askify</div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Upload Document (PDF)</h5>
+                <hr>
+                <form id="uploadForm">
+                    <div class="mb-3">
+                        <label for="documentFile" class="form-label">Choose PDF File:</label>
+                        <input class="form-control" type="file" id="documentFile" accept=".pdf">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Upload and Process</button>
+                    <div class="spinner-border text-primary mt-3" role="status" id="uploadSpinner" style="display:none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3" id="uploadStatus"></p>
+                </form>
+            </div>
+        </div>
 
-  <div class="container">
-    <div class="sub-heading">Smart PDF Question Generator</div>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-      <label for="pdf_file">Select PDF:</label>
-      <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Summary</h5>
+                        <hr>
+                        <button class="btn btn-success w-100 feature-button" data-feature="summary">Generate Summary</button>
+                        <div class="spinner-border text-success mt-3" role="status" id="summarySpinner" style="display:none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="output-area mt-3" id="summaryOutput">
+                            </div>
+                    </div>
+                </div>
+            </div>
 
-      <label for="section_name">Section Name:</label>
-      <input type="text" name="section_name" id="section_name" placeholder="Enter section name" required>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Flashcards</h5>
+                        <hr>
+                        <button class="btn btn-warning w-100 feature-button" data-feature="flashcards">Generate Flashcards</button>
+                        <div class="spinner-border text-warning mt-3" role="status" id="flashcardsSpinner" style="display:none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="output-area mt-3" id="flashcardsOutput">
+                            </div>
+                    </div>
+                </div>
+            </div>
 
-      <label for="difficulty">Difficulty Level:</label>
-      <select name="difficulty" id="difficulty" required>
-        <option value="" disabled selected>Select level</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Q&A Pairs</h5>
+                        <hr>
+                        <button class="btn btn-info w-100 feature-button" data-feature="qna">Generate Q&A</button>
+                        <div class="spinner-border text-info mt-3" role="status" id="qnaSpinner" style="display:none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="output-area mt-3" id="qnaOutput">
+                            </div>
+                    </div>
+                </div>
+            </div>
 
-      <button type="submit">Upload</button>
-    </form>
-  </div>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Mind Map</h5>
+                        <hr>
+                        <button class="btn btn-secondary w-100 feature-button" data-feature="mindmap">Generate Mind Map</button>
+                        <div class="spinner-border text-secondary mt-3" role="status" id="mindmapSpinner" style="display:none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="output-area mt-3" id="mindMapOutput">
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Ask Specific Questions about the Document (AI Search)</h5>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="userQueryInput" class="form-label">Your Question:</label>
+                            <input type="text" class="form-control" id="userQueryInput" placeholder="e.g., What is the main idea of this document?">
+                        </div>
+                        <button class="btn btn-primary w-100" id="queryDocumentButton">Ask Document</button>
+                        <div class="spinner-border text-primary mt-3" role="status" id="querySpinner" style="display:none;">
+                                <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <div class="output-area mt-3" id="queryOutput">
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>   
 </body>
 </html>
