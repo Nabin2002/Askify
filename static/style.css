@@ -1,90 +1,83 @@
- body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,.05);
-        }
-        .output-area {
-            background-color: #e9ecef;
-            border-radius: 5px;
-            padding: 15px;
-            min-height: 100px; /* Ensure visibility even when empty */
-            max-height: 400px; /* Limit height for long outputs */
-            overflow-y: auto; /* Scroll for long outputs */
-            word-wrap: break-word; /* Break long words */
-            white-space: pre-wrap; /* Preserve whitespace and breaks */
-        }
-        .output-area p {
-            margin-bottom: 5px;
-        }
-        .output-area img {
-            max-width: 100%; /* Ensure mind map image fits */
-            height: auto;
-        }
-        .spinner-border {
-            margin-top: 10px;
-        }
+.askify-heading {
+    font-size: 3rem; /* Adjust this for size */
+    font-weight: 700;
+    background: linear-gradient(270deg, #8e44ad, #3498db, #1abc9c, #9b59b6);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: headingGradientFlow 8s ease infinite;
+}
 
-        /* Flashcard specific CSS for flip effect */
-        .flashcard-container {
-            perspective: 1000px; /* For 3D effect */
-            width: 100%; /* Take full width of its parent col-md-6 */
-            height: 180px; /* Adjusted height for more content */
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
+@keyframes headingGradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
 
-        .flashcard-flipper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
 
-        .flashcard-container.flipped .flashcard-flipper {
-            transform: rotateY(180deg);
-        }
+/* Spinner hidden by default */
+.spinner-border.d-none {
+  display: none !important;
+}
 
-        .flashcard-front, .flashcard-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden; /* Hide the back of the card when not flipped */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px; /* Increased padding */
-            text-align: center;
-            font-size: 1.1rem; /* Slightly larger font */
-            line-height: 1.5;
-        }
+/* Show output areas with a subtle border */
+.output-area {
+  border: 1px solid #eaeaea;
+  padding: 1rem;
+  border-radius: 8px;
+  min-height: 80px;
+  background-color: #f8f9fa;
+}
+.flashcard-container {
+  perspective: 1000px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  height: 200px;
+  margin: auto;
+}
 
-        .flashcard-front {
-            background-color: #ffffff;
-            color: #333;
-            z-index: 2;
-        }
+.flashcard-flipper {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-        .flashcard-back {
-            background-color: #f0f8ff; /* A slightly different color for the back */
-            color: #333;
-            transform: rotateY(180deg);
-            text-align: left; /* Align text to left for readability of points */
-            font-size: 1rem; /* Smaller font for details */
-        }
-        .flashcard-back ul {
-            list-style-type: disc; /* Use bullet points */
-            padding-left: 20px;
-            margin-top: 10px;
-        }
-        .flashcard-back p {
-            margin-bottom: 0; /* Remove default paragraph margin */
-        }
+.flashcard-container.flipped .flashcard-flipper {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.flashcard-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  z-index: 2;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  overflow-y: auto;
+}

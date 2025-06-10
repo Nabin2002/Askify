@@ -6,7 +6,6 @@ from werkzeug.utils import secure_filename
 from threading import Thread 
 import time 
 
-
 from flashcard_generator import generate_flashcards
 from qna_generator import generate_questions_answers, answer_question_from_context 
 from summary_generator import generate_summary 
@@ -42,6 +41,9 @@ def load_faiss_on_startup():
 @app.route('/')
 def index():
     return render_template('index.html')
+@app.route('/askify')
+def askify():
+    return render_template('ask.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
