@@ -20,6 +20,23 @@
     }
 }
 
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.05);
+}
+.output-area {
+  background-color: #e9ecef;
+  border-radius: 5px;
+  padding: 15px;
+  min-height: 100px; /* Ensure visibility even when empty */
+  max-height: 400px; /* Limit height for long outputs */
+  overflow-y: auto; /* Scroll for long outputs */
+  word-wrap: break-word; /* Break long words */
+  white-space: pre-wrap; /* Preserve whitespace and breaks */
+}
+.output-area p {
+  margin-bottom: 5px;
+} 
 
 /* Spinner hidden by default */
 .spinner-border.d-none {
@@ -40,7 +57,7 @@
   width: 100%;
   max-width: 400px;
   height: 200px;
-  margin: auto;
+  margin-bottom: 15px;
 }
 
 .flashcard-flipper {
@@ -61,17 +78,19 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  /*-webkit-backface-visibility: hidden;*/
   padding: 1rem;
   border-radius: 8px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.flashcard-front {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.flashcard-front {
   font-weight: bold;
   font-size: 1.2rem;
   z-index: 2;
@@ -81,3 +100,23 @@
   transform: rotateY(180deg);
   overflow-y: auto;
 }
+
+.flashcard-back ul {
+  list-style-type: disc; /* Use bullet points */
+  padding-left: 20px;
+  margin-top: 10px;
+}
+.flashcard-back p {
+  margin-bottom: 0; /* Remove default paragraph margin */
+}
+
+/* This rule is correct and necessary for Bootstrap carousel items */
+/* Styling for the container that holds all flashcards */
+.flashcards-grid {
+    display: grid; /* Use CSS Grid for layout */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns: 280px min width, grows to fill space */
+    gap: 20px; /* Space between flashcards */
+    justify-content: center; /* Center items if there's extra space in the row */
+    padding: 10px; /* Add some padding around the grid */
+}
+
