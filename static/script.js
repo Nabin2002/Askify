@@ -123,49 +123,45 @@ document.addEventListener('DOMContentLoaded', function() {
                                 if (data.flashcards.length === 0) {
                                     outputElement.innerHTML = '<p>No flashcards generated.</p>';
                                 } else {
-                                    let html = '<h5>Generated Flashcards:</h5><div id="flashcardsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">';
-                                    html += '<div class="carousel-inner">';
-                                    data.flashcards.forEach((card, index) => {
-                                        // Process details to show as bullet points or paragraphs
-                                        let detailsContent = '';
-                                        // Check if details contains newline characters (typical for bullet points from LLM)
+                                    let flashcardsHtml = '';
+                                    data.flashcards.forEach((card) => { // Removed 'index' as it's not needed for 'active' class
+                                    let detailsContent = '';
                                         if (card.details && card.details.includes('\n')) {
                                             detailsContent = '<ul>';
                                             card.details.split('\n').forEach(line => {
                                                 const trimmedLine = line.trim();
                                                 if (trimmedLine) {
-                                                    // Remove leading bullets if present (e.g., "- Point")
                                                     detailsContent += `<li>${trimmedLine.startsWith('- ') ? trimmedLine.substring(2) : trimmedLine}</li>`;
                                                 }
-                                            });
-                                            detailsContent += '</ul>';
+                                        });
+                                        detailsContent += '</ul>';
                                         } else if (card.details) {
                                             detailsContent = `<p>${card.details}</p>`;
                                         }
 
-
-                                        html += `
-                                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                                                <div class="flashcard-container">
-                                                    <div class="flashcard-flipper">
-                                                        <div class="flashcard-front">
-                                                            <p><strong>${card.concept || 'Undefined Concept'}</strong></p>
-                                                        </div>
-                                                        <div class="flashcard-back">
-                                                            ${detailsContent || '<p>No details provided.</p>'}
-                                                        </div>
+                                    
+                                        flashcardsHtml += `
+                                            <div class="flashcard-container mb-3"> <div class="flashcard-flipper">
+                                                    <div class="flashcard-front">
+                                                        <p><strong>${card.concept || 'Undefined Concept'}</strong></p>
+                                                    </div>
+                                                    <div class="flashcard-back">
+                                                        ${detailsContent || '<p>No details provided.</p>'}
                                                     </div>
                                                 </div>
                                             </div>
                                         `;
                                     });
-                                    outputElement.innerHTML = html;
 
-                                    // Add event listeners to flip flashcards
-                                    document.querySelectorAll('.flashcard-container').forEach(card => {
-                                        card.addEventListener('click', function() {
-                                            this.classList.toggle('flipped');
-                                        });
+                                    outputElement.innerHTML = flashcardsHtml;
+
+                                    // Add event listeners to flip flashcards using event delegation
+                                    // Attach listener to the parent container (#flashcardsOutput)
+                                    outputElement.addEventListener('click', function(event) {
+                                        const flashcardContainer = event.target.closest('.flashcard-container');
+                                        if (flashcardContainer) {
+                                            flashcardContainer.classList.toggle('flipped');
+                                        }
                                     });
                                 }
                             } else if (feature === 'qna' && data.qa_pairs && Array.isArray(data.qa_pairs)) {
